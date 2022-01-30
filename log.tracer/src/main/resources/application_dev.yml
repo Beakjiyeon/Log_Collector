@@ -6,8 +6,8 @@ spring:
 #  datasource:
 #    driver-class-name: com.mysql.cj.jdbc.Driver
 #    url: jdbc:mysql://localhost:3306/log_collector?allowPublicKeyRetrieval=true&useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul
-#    username: root
-#    password: 1234
+#    username: 
+#    password: 
 #  jpa:
 #    show-sql: true
 #    properties:
