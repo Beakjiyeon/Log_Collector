@@ -7,7 +7,7 @@ spring:
       #    driver-class-name: com.mysql.cj.jdbc.Driver
       #    url: jdbc:mysql://localhost:3306/log_collector?allowPublicKeyRetrieval=true&useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul
       #    username: root
-      #    password: 1234
+      #    password: 
       #  jpa:
       #    show-sql: true
       #    properties:
@@ -18,8 +18,8 @@ spring:
   #  mail:
   #    host: smtp.gmail.com
   #    port: 587
-  #    username: journi.baek@igaworks.com
-  #    password: ywchteycoyxbzkhr222
+  #    username: 
+  #    password: 
   #
   #    properties:
   #      mail:
@@ -42,4 +42,4 @@ spring:
     host: localhost
     port: 5672
     username: guest
-    password: guest
+    password: 
