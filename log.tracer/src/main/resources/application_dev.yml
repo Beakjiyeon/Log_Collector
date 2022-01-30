@@ -18,8 +18,8 @@ spring:
 #  mail:
 #    host: smtp.gmail.com
 #    port: 587
-#    username: journi.baek@igaworks.com
-#    password: ywchteycoyxbzkhr222
+#    username:
+#    password:
 #
 #    properties:
 #      mail:
@@ -42,4 +42,4 @@ spring:
     host: localhost
     port: 5672
     username: guest
-    password: guest
+    password: 
