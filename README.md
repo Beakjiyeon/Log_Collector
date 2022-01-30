@@ -3,6 +3,7 @@
   
 <br/>
 
+
 ### 아키텍처
 ![image](https://user-images.githubusercontent.com/35768650/151692146-7357f015-db28-4078-bda7-11e74500c8ef.png)
 
@@ -39,3 +40,10 @@
   
 <br/>
 
+  
+### 실행 모습
+![image](https://user-images.githubusercontent.com/35768650/151692441-e1e8c9e1-b604-400b-a02b-16dfdfa8b8f1.png)
+![image](https://user-images.githubusercontent.com/35768650/151692531-811bf469-f998-4c4a-a4b8-74926d455d82.png)
+![image](https://user-images.githubusercontent.com/35768650/151692556-a65fabf3-80f8-4f3e-8703-854bf7228876.png)
+  
+<br/>
