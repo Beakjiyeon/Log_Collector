@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Log History</title>
+    <link href="/bootstrap/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link href="/bootstrap/css/sb-admin-2.min.css" rel="stylesheet">
+    <style>
+        /* Tooltip text */
+        #mostCalledService #tooltiptext {
+            visibility: hidden;
+            width: 120px;
+            background-color: #555;
+            color: #fff;
+            text-align: center;
+            padding: 5px 0;
+            border-radius: 6px;
+
+            /* Position the tooltip text */
+            position: absolute;
+            z-index: 1;
+            bottom: 125%;
+            left: 50%;
+            margin-left: -60px;
+
+            /* Fade in tooltip */
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        /* Tooltip arrow */
+        #mostCalledService #tooltiptext::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: #555 transparent transparent transparent;
+        }
+
+        /* Show the tooltip text when you mouse over the tooltip container */
+        #mostCalledService:hover #tooltiptext {
+            visibility: visible;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body id="page-top">
+    <div id="wrapper">
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+            <a style="margin-top:3%" class="sidebar-brand d-flex align-items-center justify-content-center" href="index.mustache">
+                <div class="sidebar-brand-icon ">
+                    <img src="https://bit.ly/3eBzUQt" />
+                </div>
+            </a>
+            <hr class="sidebar-divider">
+            <li class="nav-item active">
+                <div class="sidebar-brand-icon" style="text-align: center">
+                    <a class="nav-link" href="index.mustache">
+                        <span style="font-size: 30px">Log Collector</span>
+                    </a>
+                </div>
+            </li>
+            <hr class="sidebar-divider">
+            <li class="nav-item">
+                <a class="nav-link collapsed" onclick="location.href='http://localhost:8082/index';" href="#" data-toggle="collapse" data-target="#collapseTwo"
+                    aria-expanded="true" aria-controls="collapseTwo">
+                    <i class="fas fa-fw fa-cog"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
+                    aria-expanded="true" aria-controls="collapseUtilities">
+                    <i class="fas fa-fw fa-wrench"></i>
+                    <span>Log History</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link collapsed" onclick="location.href='http://localhost:8082/mail';"href="#" data-toggle="collapse" data-target="#collapseUtilities"
+                   aria-expanded="true" aria-controls="collapseUtilities">
+                    <i class="fas fa-fw fa-wrench"></i>
+                    <span>Undelivered Mails</span>
+                </a>
+            </li>
+            <hr class="sidebar-divider">
+        </ul>
+        <div id="content-wrapper" class="d-flex flex-column">
+            <div id="content">
+                <div class="container-fluid">
+                    <div style="margin-top:2%;margin-bottom:2%" class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Log History</h1>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-6 col-lg-12">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">로그</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label">서비스명 : </label>
+                                        <div class="col-sm-4">
+                                            <input type="text" id="selectedLeftTagId" value="" class="form-control" tabindex="2" readonly />
+                                        </div>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table id="serviceLogTable" class="table table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th id="metricCol_1" name="metricCol" style="text-align: center;">발생 일시</th>
+                                                <th id="metricCol_2" name="metricCol" style="text-align: center;">로그 타입</th>
+                                                <th id="metricCol_3" name="metricCol" style="text-align: center;">로그 내용</th>
+                                                <th id="metricCol_4" name="metricCol" style="text-align: center;">추적 ID</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody id="serviceLogBody">
+                                            </tbody>
+                                            <tfoot>
+                                            <tr>
+                                                <td colspan="4">
+                                                    <ul id="paginationServiceLog" class="pagination justify-content-end">
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-6 col-lg-12">
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">특정 추적 ID 에서 발생한 로그</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label">추적ID : </label>
+                                        <div class="col-sm-4">
+                                            <input type="text" id="selectedTagId" value="" class="form-control" tabindex="2" readonly />
+                                        </div>
+                                        <label class="col-sm-2 col-form-label">서비스명</label>
+                                        <div class="col-sm-4">
+                                            <input type="text" id="searchTagId" data-placeholder="서비스를 입력하세요." class="form-control" tabindex="2" />
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label">로그 타입</label>
+                                        <div class="col-sm-4">
+                                            <select id="searchLogType" data-placeholder="로그유형을 선택하세요." class="form-control" tabindex="2">
+                                                <option value="">Select</option>
+                                                <option value="ERROR">ERROR</option>
+                                                <option value="INFO">INFO</option>
+                                            </select>
+                                        </div>
+                                       <label class="col-sm-2 col-form-label">로그 내용</label>
+                                        <div class="col-sm-4">
+                                            <input type="text" id="searchLogData" data-placeholder="단어를 입력하세요." class="form-control" tabindex="2" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group row">
+                                        <label class="col-sm-2 col-form-label"></label>
+                                        <div class="col-sm-4">
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <button class="ladda-button btn btn-primary float-right" data-style="expand-left" id="searchBtn">
+                                                <span class="ladda-label">조회</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table id="traceLogTable" class="table table-striped">
+                                            <thead>
+                                            <tr>
+                                                <th id="metricCol_1" name="metricCol" style="text-align: center;">발생 일시</th>
+                                                <th id="metricCol_3" name="metricCol" style="text-align: center;">서비스명</th>
+                                                <th id="metricCol_4" name="metricCol" style="text-align: center;">로그 타입</th>
+                                                <th id="metricCol_5" name="metricCol" style="text-align: center;">로그 내용</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody id="traceLogBody">
+                                            </tbody>
+                                            <tfoot>
+                                            <tr>
+                                                <td colspan="4">
+                                                    <ul id="paginationTraceLog" class="pagination justify-content-end">
+                                                    </ul>
+                                                </td>
+                                            </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Log Collector 2021</span>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+    <script src="/bootstrap/vendor/jquery/jquery.min.js"></script>
+    <script src="/bootstrap/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/bootstrap/vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="/bootstrap/js/sb-admin-2.min.js"></script>
+    <script src="/bootstrap/vendor/chart.js/Chart.min.js"></script>
+    <script src="/bootstrap/js/dev/service-log-table.js"></script>
+    <script src="/bootstrap/js/dev/trace-log-table.js"></script>
+    <script>
+
+        var link = document.location.href;
+        var l = link.split('/');
+        getServiceLog(l[5], l[7]);
+        $('#selectedLeftTagId').val(l[5]);
+        $('#searchBtn').click(function() {
+            var selectedTagId = $('#selectedTagId').val();
+            var searchTagId = $('#searchTagId').val();
+            var searchLogType = $('#searchLogType').val();
+            var searchLogData = $('#searchLogData').val();
+            getSpecificTraceTable(selectedTagId, searchTagId, searchLogType, searchLogData);
+        });
+    </script>
+</body>
+</html>

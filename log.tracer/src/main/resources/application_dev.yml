@@ -1,0 +1,45 @@
+server:
+  port: 8085
+spring:
+  profiles:
+    active: default
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://localhost:3306/log_collector?allowPublicKeyRetrieval=true&useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul
+#    username: root
+#    password: 1234
+#  jpa:
+#    show-sql: true
+#    properties:
+#      hibernate:
+#        format_sql: true
+        # dialect: com.visualizer.log.config.CustomMySQLDialect
+
+#  mail:
+#    host: smtp.gmail.com
+#    port: 587
+#    username: journi.baek@igaworks.com
+#    password: ywchteycoyxbzkhr222
+#
+#    properties:
+#      mail:
+#        smtp:
+#          auth: true
+#          starttls:
+#            enable: true
+#
+#  mvc:
+#    throw-exception-if-no-handler-found: true
+#  web:
+#    resources:
+#      add-mappings: false
+#
+#  jackson:
+#    deserialization:
+#      fail-on-unknown-properties: true # 클라이언트에서 서버로 알 수 없는 데이터 필드를 전달할 경우 HttpMessageNotReadableException 를 발생시키는 설정
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest

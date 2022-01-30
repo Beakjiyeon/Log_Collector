@@ -1,0 +1,26 @@
+### Gradle ###
+.gradle
+
+### Build ###
+/log.visualizer/build/
+/log.collector/build/
+/log.tracer/build/
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+out/
+
+
+## Security
+/log.collector/src/main/resources/application-dev.yml
+/log.collector/src/main/resources/application-test.yml
+/log.collector/src/main/resources/constant-dev.yml
+/log.visualizer/src/main/resources/application-dev.yml
+/log.visualizer/src/main/resources/application-test.yml
+/산출물/통합설계문서.xlsx
+
+## Log
+/log.collector/hs_err_pid10148.log

@@ -1,0 +1,110 @@
+buildscript {
+    ext {
+        springBootVersion = '2.4.1'
+        querydslPluginVersion = '1.0.10'
+    }
+    repositories {
+        mavenCentral()
+        maven { url "https://plugins.gradle.org/m2/" }
+    }
+    dependencies {
+
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
+        classpath "io.spring.gradle:dependency-management-plugin:1.0.10.RELEASE"
+        classpath("gradle.plugin.com.ewerk.gradle.plugins:querydsl-plugin:${querydslPluginVersion}")
+
+    }
+}
+
+allprojects {
+    group 'org.example'
+    version '1.0-SNAPSHOT-' + new Date().format("yyyyMMddHHmmss")
+}
+
+
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'com.ewerk.gradle.plugins.querydsl'
+
+    sourceCompatibility = '11'
+
+    configurations {
+        compileOnly {
+            extendsFrom annotationProcessor
+        }
+        developmentOnly
+        runtimeClasspath {
+            extendsFrom developmentOnly
+        }
+    }
+
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        // Web
+        implementation('org.springframework.boot:spring-boot-starter-web')
+
+        // DB
+        implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+        implementation 'mysql:mysql-connector-java'
+        implementation 'org.springframework.boot:spring-boot-starter-jdbc'
+        implementation 'com.querydsl:querydsl-jpa'
+        implementation 'com.h2database:h2' // for jpa test
+        implementation 'org.hibernate:hibernate-entitymanager'
+        
+        // Validation
+        implementation('javax.validation:validation-api:2.0.1.Final')
+        implementation('org.springframework.boot:spring-boot-starter-validation:2.3.7.RELEASE')
+
+        // Tool
+        compileOnly('org.projectlombok:lombok')
+        annotationProcessor('org.projectlombok:lombok')
+        developmentOnly("org.springframework.boot:spring-boot-devtools")
+        implementation('org.springframework.boot:spring-boot-starter-mustache')
+
+        // Test
+        testImplementation('org.springframework.boot:spring-boot-starter-test')
+        testCompileOnly 'junit:junit:4.12'
+
+        testCompileOnly('org.projectlombok:lombok')
+        testAnnotationProcessor('org.projectlombok:lombok')
+    }
+
+
+
+// querydsl 추가 시작
+    def querydslDir = "$buildDir/generated/querydsl"
+
+    querydsl {
+        jpa = true
+        querydslSourcesDir = querydslDir
+    }
+
+    sourceSets {
+        main.java.srcDir querydslDir
+    }
+
+    configurations {
+        querydsl.extendsFrom compileClasspath
+    }
+
+    compileQuerydsl {
+        options.annotationProcessorPath = configurations.querydsl
+    }
+    compileQuerydsl {
+        // querydsl 컴파일시 사용하는 애노테이션프로세서('com.querydsl.apt.jpa.JPAAnnotationProcessor')의 경로를 querydsl 이 지정한 경로를 이용한다는 선언
+        options.annotationProcessorPath = configurations.querydsl
+        //출처: https://qmffjem09.tistory.com/entry/queryDsl-error [새로운 도전을 위한 한걸음]
+    }
+
+
+
+    test {
+        useJUnitPlatform()
+    }
+}

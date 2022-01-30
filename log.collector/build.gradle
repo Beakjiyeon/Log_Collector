@@ -1,0 +1,22 @@
+
+dependencies {
+
+    // Email
+    implementation 'org.springframework.boot:spring-boot-starter-mail'
+
+    // rabbitMQ
+    implementation 'org.springframework.boot:spring-boot-starter-amqp'
+    testImplementation 'org.springframework.amqp:spring-rabbit-test'
+
+
+    // Tool
+    implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+    implementation 'com.fasterxml.jackson.core:jackson-core:2.12.0'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.0'
+    implementation 'com.fasterxml.jackson.core:jackson-annotations:2.12.0'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.11.3'
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+
+    // Hateoas test
+    implementation 'org.springframework.boot:spring-boot-starter-hateoas'
+}
