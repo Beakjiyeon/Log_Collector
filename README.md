@@ -2,7 +2,11 @@
 분산된 서비스들의 로그를 효과적으로 추적하기 위한 로그 수집 시스템
   
 <br/>
-  
+
+### 아키텍처
+![image](https://user-images.githubusercontent.com/35768650/151692146-7357f015-db28-4078-bda7-11e74500c8ef.png)
+
+
 ### Details
 1. 임의 서비스가 보내온 전송 로그를 수집하는 API 서버를 구현해야한다
     1. JSON Format
